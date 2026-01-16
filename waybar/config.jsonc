@@ -1,0 +1,197 @@
+{
+	"layer": "top",
+	"modules-left": [
+		"group/user",
+		"group/mpris",
+		"group/pulse"
+	],
+	"modules-center": [
+		"clock"
+	],
+	"modules-right": [
+		"custom/kbd_light",
+		"group/bluez",
+		"group/net",
+		"group/disk",
+		"group/mem",
+		"group/cpu",
+		"group/battery"
+	],
+	"passthrough": "true",
+	"custom/userIcon": {
+		"format": "" // User
+	},
+	"custom/mprisIcon": {
+		"format": "󰦚" // Record Player
+	},
+	"custom/pulseIcon": {
+		"format": "" // Audio
+	},
+	"custom/bluezIcon": {
+		"format": "󰂯" // Bluetooth
+	},
+	"custom/netIcon": {
+		"format": "🖧" // Three networked computers
+	},
+	"custom/diskIcon": {
+		"format": "🖴" // Hard disk
+	},
+	"custom/memIcon": {
+		"format": "" // Memory
+	},
+	"custom/cpuIcon": {
+		"format": "" // Cpu
+	},
+	"custom/batteryIcon": {
+		"exec": "~/.config/waybar/waybar_battery.sh",
+		"return-type": "json",
+		"interval": 60,
+		"format": "{text}"
+	},
+	// modules-left
+	"user": {
+		"interval": 60,
+		"format": "{user}\nUptime: {work_H}:{work_M}"
+	},
+	"mpris": {
+		"interval": 2,
+		"format": "{artist}\n{title} {position}/{length}"
+	},
+	"pulseaudio": {
+		"format": "{volume}%"
+	},
+	// modules-center
+	"clock": {
+	},
+	// modules-right
+	"battery": {
+	},
+	"cpu": {
+		"interval": 5,
+		"format": "{usage}% | freq: {avg_frequency}Ghz",
+		"tooltip": false
+	},
+	"memory": {
+		"interval": 5,
+		"format": "{used} | SW: {swapUsed}",
+		"tooltip": false
+	},
+	"disk": {
+		"interval": 60,
+		"format": "[/home] 🢂 Used: {used} | Free: {free}",
+		"path": "/home",
+		"tooltip": false,
+		"unit": "GiB"
+	},
+	"network": {
+		"interface": "wlan0",
+		"interval": 5,
+		"family": "ipv4_6",
+		"format": "{ifname}",
+		"format-ethernet": "{ifname} | Ethernet: {essid} @ {frequency}Ghz | {ipaddr}Up: {bandwidthUpByt} | Down: {bandwidthDownBytes}",
+		"format-wifi": "{ifname} | WiFi: {essid} @ {frequency}Ghz | {ipaddr}Up: {bandwidthUpBytes} | Down: {bandwidthDownBytes}",
+		"format-linked": "{ifname} | Linked (No IP Address) | {ipaddr}",
+		"format-disconnected": "{ifname} | Disconnected | {ipaddr}",
+		"format-disabled": "{ifname} | Disabled | {ipaddr}",
+		"tooltip": false
+	},	"bluetooth": {
+		"format": "󰂯"
+	},
+	"custom/kbd_light": {
+    		"exec": "bash -c 'cur=$(cat /sys/class/leds/spi::kbd_backlight/brightness); case \"$cur\" in 0) text=\"󰃞\" ;; 127) text=\"󰃟\" ;; 255) text=\"󰃠\" ;; esac; printf \"{\\\"text\\\":\\\"%s\\\"}\\n\" \"$text\"'",
+		"return-type": "json",
+    		"signal": 8,
+		"format": "{text}",
+    		"on-click": "bash -c 'cur=$(cat /sys/class/leds/spi::kbd_backlight/brightness); case \"$cur\" in 0) next=127 ;; 127) next=255 ;; *) next=0 ;; esac; brightnessctl --device=\"spi::kbd_backlight\" set \"$next\"; pkill -RTMIN+8 waybar'"
+	},
+	"group/user": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/userIcon",
+			"user"
+		],
+		"drawer": {
+			"transition-left-to-right": true
+		}
+	},
+	"group/mpris": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/mprisIcon",
+			"mpris"
+		],
+		"drawer": {
+			"transition-left-to-right": true
+		}
+	},
+	"group/pulse": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/pulseIcon",
+			"pulseaudio"
+		],
+		"drawer": {
+			"transition-left-to-right": true
+		}
+	},
+	"group/bluez": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/bluezIcon",
+			"bluetooth"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	},
+	"group/net": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/netIcon",
+			"network"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	},
+	"group/disk": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/diskIcon",
+			"disk"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	},
+	"group/mem": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/memIcon",
+			"memory"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	},
+	"group/cpu": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/cpuIcon",
+			"cpu"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	},
+	"group/battery": {
+		"orientation": "horizontal",
+		"modules": [
+			"custom/batteryIcon",
+			"battery"
+		],
+		"drawer": {
+			"transition-left-to-right": false
+		}
+	}
+}
